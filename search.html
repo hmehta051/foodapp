@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="navbar.css">
+    <title>Food App</title>
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <nav id="nav1">
+        <!-- <div id="navhead">
+        <div id="title">
+            <div id="name">FOOD APP</div>
+        </div>
+        <hr>
+        <div id="content">
+            <div id="search">
+                <input type="text" placeholder="Search" id="name">
+                <button>Search</button>
+            </div>
+            <div id="latest">Latest</div>
+            <div id="recipe">Recipe</div>
+        </div>
+    </div> -->
+    </nav>
+    <div id="searchBox">
+        <input type="text" placeholder="Search" id="nameInp">
+        <button id="searchBtn">Search</button>
+    </div>
+    <!-- debouncing -->
+    <div id="debounceBox">
+        <!-- <div id="hem">k</div>
+        <div id="hem">l</div>
+        <div id="hem">l</div>
+        <div id="hem">l</div>
+        <div id="hem">l</div>
+        <div id="hem">l</div>
+        <div id="hem">l</div> -->
+    </div>
+    
+    <div id="catalog">
+        <!-- <div id="png">
+            <img src="https://images.unsplash.com/photo-1639152306957-446a29b71e8a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=1000&q=60" alt=""></div>
+        <div id="detail">
+            <h2>Food Name:</h2>
+            <p id="cat">Category:</p>
+            <p>para:</p>
+        </div> -->
+    </div>
+    
+
+</body>
+
+</html>
+<script type="module">
+    var response;
+    
+    import {navbar} from './components/navbar.js'
+    import {showData,appendData} from './scripts/showdata.js'
+    import {debounce,getname} from './scripts/debounce.js'
+    let nav1=document.getElementById('nav1')
+    nav1.innerHTML=navbar();
+
+    //showdata
+    
+    async function testing(nameInp){
+        response = await showData(`https://www.themealdb.com/api/json/v1/1/search.php?s=${nameInp}`)
+        appendData(response.meals,catalog);
+        console.log(response.meals);
+    }
+    let searchBtn=document.getElementById("searchBtn");
+    searchBtn.addEventListener('click',function(){
+    let nameInp=document.getElementById("nameInp").value;
+    testing(nameInp);
+
+    })
+
+    let bomb;
+    let nameInp=document.getElementById("nameInp");
+    nameInp.addEventListener("keyup",function(){
+       debounce(getname,300);
+    })
+</script>
